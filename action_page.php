@@ -1,11 +1,14 @@
-<html>
-<body>
-
-Welcome <?php echo $_GET["Name"]; ?><br>
-Your email address is: <?php echo $_GET["Email"]; ?><br>
-Thank you for your input! <br>
-The message you sent to Mr. Whiteley is: <?php echo $_GET["Message"]; ?><br>
-He will get back with you ASAP.
-
-</body>
-</html>
+<?php
+if(isset($_POST['Name']) && isset($_POST['Email']) && isset($_POST['Message'])) {
+    $data = $_POST['Name'] . '-' . $_POST['Email'] . '-' . $_POST['Message'] . "\n";
+    $ret = file_put_contents('mydata.txt', $data, FILE_APPEND | LOCK_EX);
+    if($ret === false) {
+        die('There was an error writing this file');
+    }
+    else {
+        echo "$ret bytes written to file";
+    }
+}
+else {
+   die('no post data to process');
+}
